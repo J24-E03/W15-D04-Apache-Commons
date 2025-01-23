@@ -13,7 +13,7 @@ In the first step we'll download the commons-io library and include it in our pr
 > Import IntelliJ: [Import a library](https://www.jetbrains.com/help/idea/library.html)
 > Import Eclipse: [How to import a jar in Eclipse](https://stackoverflow.com/questions/3280353/how-to-import-a-jar-in-eclipse)
 
-If you imported the library correctly, the Exercise.java file should not run successfully and show the following output:
+If you imported the library correctly, the org.dci.Exercise.java file should not run successfully and show the following output:
 
 ````
 Successfully imported the Apache Commons IO library
