@@ -4,9 +4,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.List;
+
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 public class Exercise {
@@ -20,7 +19,7 @@ public class Exercise {
     }
 
     // Working with Streams
-    readWebPage("https://digitalcareerinstitute.org/");
+    readWebPage("https://google.com");
 
     // Working with files
     readFile("LoremIpsum.txt");
@@ -33,6 +32,8 @@ public class Exercise {
 
   private static boolean checksum() throws IOException {
     // TODO: Add your code here
+    File file = new File("labs/Java-Libraries-ApacheCommons/src/main/resources/LoremIpsum.txt");
+    long checksum = FileUtils.checksumCRC32(file);
 
     return checksum == 2449403980L;
   }
@@ -42,23 +43,37 @@ public class Exercise {
     InputStream in = new URL(url).openStream();
 
     // TODO: Add your code here
+    String content = IOUtils.toString(in, StandardCharsets.UTF_8);
+    System.out.println(content);
   }
 
   private static void readFile(String fileName) throws IOException {
     System.out.println("\n\nReading LoremIpsum.txt:");
     // TODO: Add your code here
+    File file = new File("labs/Java-Libraries-ApacheCommons/src/main/resources/LoremIpsum.txt");
+    String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+    System.out.println(content);
   }
 
   private static void copyFile(String fileName) throws IOException, InterruptedException {
-    System.out.println("\n\nCreating a copy of LoremIpsum.txt in " + FileUtils.getTempDirectory());
-    // TODO: Add your code here
+    File sourceFile = new File("labs/Java-Libraries-ApacheCommons/src/main/resources/LoremIpsum.txt");
+    File destDir= FileUtils.getTempDirectory();
+    File destFile = new File(destDir, fileName);
+
+    System.out.println("\n\nCreating a copy of LoremIpsum.txt in " + destDir.getAbsolutePath());
+    FileUtils.copyFileToDirectory(sourceFile, destDir);
 
     Thread.sleep(150);
+
+    System.out.println("Deleting the copied file");
+    FileUtils.forceDelete(destFile);
 
     // TODO: Add your code here
   }
 
   private static void findJavaFiles(String relativePath) {
     System.out.println("\n\nListing all java files in directory " + relativePath);
+    System.out.println(FileUtils.listFiles(new File(relativePath), new String[]{"java"}, true));
+    }
   }
-}
+
